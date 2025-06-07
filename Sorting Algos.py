@@ -7,12 +7,21 @@ def bubble_sort(arr):
             if arr[i] > arr[i+1]:
                 arr[i],arr[i+1] = arr[i+1],arr[i]
                 sorted = False
+
+    return arr
                 
 def insertion_sort(arr):
+    
     for i in range(1,len(arr)):
-        for j in range(0,i):
-            if arr[i]>arr[j]:
-                arr[i],arr[j] = arr[j],arr[i]
+        item = arr[i]
+        j = i - 1
+        while j >= 0 and item < arr[j]:
+            arr[j+1] = arr[j]
+            j -= 1
+
+        arr[j+1] = item
+
+    return arr
 
 
 
