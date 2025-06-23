@@ -4,7 +4,19 @@ class ListNode:
         self.val = data
         self.next = None
 
+    def __str__(self):
+        return str(self.val)
     
+
+class DoublyNode:
+    def __init__(self, data, next=None, prev=None):
+        self.val = data
+        self.next = next
+        self.prev = prev
+
+    def __str__(self):
+        return str(self.val)
+     
     
 
 class LinkedList:
@@ -35,6 +47,9 @@ class LinkedList:
         while cur:
             print(cur.val)
             cur = cur.next
+
+    
+
 
 
 
