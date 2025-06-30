@@ -1,3 +1,4 @@
+from collections import deque
 class TreeNode:
     def __init__(self,val,left=None,right=None):
         self.val = val
@@ -34,7 +35,7 @@ def pre_order(node):
     pre_order(node.left)
     pre_order(node.right)
 
-#pre_order(A)
+pre_order(A)
 
 # Pre-order traversal (DFS) Time: O(n) Space:O(n) Goes left subtree, then prints node, then right.
 
@@ -60,4 +61,31 @@ def post_order(node):
     post_order(node.right)
     print(node)
 
-post_order(A)
+#post_order(A)
+
+# Pre-order traversal using iteration
+
+def pre_order_iterative(node):
+    stk = [node]
+
+    while stk:
+        node = stk.pop()
+        print(node)
+        if node.right:
+            stk.append(node.right)
+        if node.left:
+            stk.append(node.left)
+
+
+pre_order_iterative(A)
+
+# BFS - level order traversal
+
+def BFS(node):
+    q = deque()
+    q.append(node)
+
+    while q:
+        print(node)
+        q.append(node.left)
+        q.append(node.right)
