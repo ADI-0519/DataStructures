@@ -77,6 +77,7 @@ def pre_order_iterative(node):
             stk.append(node.left)
 
 
+
 pre_order_iterative(A)
 
 # BFS - level order traversal
@@ -86,6 +87,7 @@ def BFS(node):
     q.append(node)
 
     while q:
+        node = q.popleft()
         print(node)
         q.append(node.left)
         q.append(node.right)
