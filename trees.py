@@ -80,6 +80,21 @@ def pre_order_iterative(node):
 
 pre_order_iterative(A)
 
+def in_order_iterative(root):
+    stk = [root]
+    curr = node
+
+    while stk or curr:
+        while curr:
+            stk.append(curr)
+            curr = curr.left
+
+        curr = stk.pop()
+        print(curr)
+        curr = curr.right   
+
+
+
 # BFS - level order traversal
 
 def BFS(node):
@@ -91,3 +106,35 @@ def BFS(node):
         print(node)
         q.append(node.left)
         q.append(node.right)
+
+
+# Building a tree from a list
+def build_tree_from_list(lst):
+    if not lst:
+        return None
+    root = TreeNode(lst[0])
+    queue = deque([root])
+    i = 1
+    while i < len(lst):
+        current = queue.popleft()
+        if i < len(lst) and lst[i] is not None:
+            current.left = TreeNode(lst[i])
+            queue.append(current.left)
+        i += 1
+        if i < len(lst) and lst[i] is not None:
+            current.right = TreeNode(lst[i])
+            queue.append(current.right)
+        i += 1
+    return root
+
+def build_tree(root,val):
+    if not root:
+        return TreeNode(val)
+
+    if val < root.val:
+        root.left = build_tree(root.left, val)
+    else:
+        root.right = build_tree(root.right, val)
+
+    return root
+
