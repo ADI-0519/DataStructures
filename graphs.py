@@ -107,3 +107,90 @@ def bfs_iterative(source, graph):
                 q.append(neightbour)
 
 print(bfs_iterative(0, edge_to_adj_list_defaultdict(n, A)))
+
+# Graphs can also be represented using a class
+
+class Graph:
+    def __init__(self):
+        self.graph = defaultdict(list)
+
+    def add_edge(self, u, v):
+        self.graph[u].append(v)
+        # If undirected graph, uncomment the next line
+        # self.graph[v].append(u)  
+
+    def get_graph(self):
+        return self.graph
+
+g = Graph()
+g.add_edge(0,1)
+
+# There can also be matrix graph representation where the matrix is the graph.
+# Each cell is a node and the edges are the adjacent cells.
+
+matrix = [
+    [0, 1, 0],
+    [1, 0, 1],
+    [0, 1, 0]
+]
+
+def matrix_dfs(mat):
+    seen = set()
+    directions = [(0,1),(1,0),(-1,0),(0,-1)]
+    rows, cols = len(mat), len(mat[0])
+
+    def dfs(r,c):
+        if (r < 0 or r >= rows or c < 0 or c >= cols or (r,c) in seen or mat[r][c] == 0):
+            return
+        
+        seen.add((r,c))
+        print((r,c))
+
+        for dr, dc in directions:
+            dfs(r + dr, c + dc)
+
+# Iterative DFS for matrix
+
+def dfs(matrix):
+    rows, cols = len(matrix),len(matrix[0])
+    directions = [(0,1),(1,0),(-1,0),(0,-1)]
+    stk = [(0,0)]
+
+    seen = set()
+    seen.add((0,0))
+
+    while stk:
+        r,c = stk.pop()
+        print((r,c))
+
+        for x,y in directions:
+            nr, nc = r + x, c + y
+            if (nr < 0 or nr >= rows or nc < 0 or nc >= cols or (nr,nc) in seen or matrix[nr][nc] == 0):
+                continue
+
+            seen.add((nr,nc))
+            stk.append((nr,nc))
+
+# Iterative BFS for matrix
+
+def bfs(matrix):
+    rows, cols = len(matrix),len(matrix[0])
+    seen = set()
+    directions = [(0,1),(1,0),(0,-1),(-1,0)]
+    q = deque([(0,0)])
+    seen.add((0,0))
+
+    while q:
+        r,c = q.popleft()
+        print((r,c))
+
+        # adding neighbours
+
+        for x,y in directions:
+            nr, nc = r + x, c + y
+            if (0 <= nr < rows and 0 <= nc < cols and matrix[nr][nc] == 1 and (nr,nc) not in seen):
+                seen.add((nr,nc))
+                q.append((nr,nc))
+
+            
+
