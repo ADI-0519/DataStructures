@@ -193,4 +193,32 @@ def bfs(matrix):
                 q.append((nr,nc))
 
             
+# Performing level order BFS on graph
+# In a graph, a level is the number of edges from the source node.
 
+def level_order_bfs(matrix):
+
+    rows, cols = len(matrix),len(matrix[0])
+    seen = set()
+    directions = [(0,1),(1,0),(0,-1),(-1,0)]
+    q = deque([(0,0)])
+    seen.add((0,0))
+
+    levels = []
+
+    while q:
+        level_size = len(q)
+        curr = []
+        
+        for i in range(level_size):
+            r,c = q.popleft()
+            curr.append((r,c))
+            for x,y in directions:
+                nr, nc = r + x, c + y
+                if (0 <= nr < rows and 0 <= nc < cols and matrix[nr][nc] == 1 and (nr,nc) not in seen):
+                    seen.add((nr,nc))
+                    q.append((nr,nc))
+
+        levels.append(curr)
+
+    return levels
