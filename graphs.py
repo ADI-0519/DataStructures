@@ -47,6 +47,17 @@ def edge_to_adj_list_defaultdict(n, edges):
 
 print(edge_to_adj_list_defaultdict(n, A))
 
+# Creating dictionary adjacency list
+
+def edge_to_adj_list_dict(n, edges):
+    adj_list = {i : [] for i in range(n)}
+
+    for u,v in edges:
+        adj_list[u].append(v)
+        # If undirected graph, uncomment the next line
+        # adj_list[v].append(u)
+
+    return adj_list
 
 # DFS with recursion
 
@@ -68,7 +79,7 @@ def dfs(source, graph):
 
 dfs(0, edge_to_adj_list_defaultdict(n, A))
 
-# dfs via iteration time complexity: O(V + E), space complexity: O(V)
+# dfs via iteration time complexity: O(V + E), space complexity: O(V) Assumes graph is connected
 
 def dfs_iterative(source, graph):
 
@@ -84,6 +95,15 @@ def dfs_iterative(source, graph):
             if neightbour not in seen:
                 seen.add(neightbour)
                 stk.append(neightbour)
+
+    # If you want to handle disconnected graphs, uncomment the next lines
+    # for i in range(len(graph)):
+    #     if i not in seen:
+    #         seen.add(i)
+    #         stk.append(i)
+    #        while stk: 
+    #            node = stk.pop()
+    #            print(node)        
 
 
 
@@ -105,6 +125,7 @@ def bfs_iterative(source, graph):
             if neightbour not in seen:
                 seen.add(neightbour)
                 q.append(neightbour)
+
 
 print(bfs_iterative(0, edge_to_adj_list_defaultdict(n, A)))
 
@@ -222,3 +243,25 @@ def level_order_bfs(matrix):
         levels.append(curr)
 
     return levels
+
+
+def count_connnected_components(graph):
+    
+    seen = set()
+    components = 0
+
+    def dfs(node):
+        stk = [node]
+        seen.add(node)
+        while stk:
+            curr = stk.pop()
+            for neightbour in graph.get(curr, []):
+                if neightbour not in seen:
+                    seen.add(neightbour)
+                    stk.append(neightbour)
+
+    for item in graph:
+        if item not in seen:
+            components += 1
+            dfs(item)
+
