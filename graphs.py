@@ -3,7 +3,8 @@
 n = 8
 A = [[0,1],[1,2],[0,3],[3,4],[3,6],[3,7],[4,2],[4,5],[5,2]]
 
-# Adjacency matrix representation
+# Adjacency matrix representation. Useful for dense graphs. Space complexity: O(V^2)
+# Adjacency list representation. Useful for sparse graphs. Space complexity: O(V + E)
 def edge_to_adj_matrix(n, edges):
     adj_matrix = [[0 for i in range(n)] for j in range(n)]
 
@@ -265,3 +266,77 @@ def count_connnected_components(graph):
             components += 1
             dfs(item)
 
+
+def cycle_check(graph):
+    seen = set()
+    
+    def dfs(node, parent):
+        stk = [(node, parent)]
+        seen.add(node)
+
+        while stk:
+            item, curr_parent = stk.pop()
+
+            for nei in graph.get(item, []):
+                if nei not in seen:
+                    seen.add(nei)
+                    stk.append((nei, item))
+
+                elif curr_parent != nei:
+                    print("Cycle detected")
+                    return True
+
+        return False
+    
+    for node in graph:
+        if node not in seen:
+            if dfs(node, None):
+                return True
+    return False
+
+def directed_cycle_check(graph):
+    UNVISITED, VISITING, VISITED = 0, 1, 2
+
+    
+    for node in graph:
+        graph[node] = (graph[node], UNVISITED)
+    
+
+def unique_paths(grid):
+    rows, cols = len(grid), len(grid[0])
+    directions = [(0,1),(1,0),(0,-1),(-1,0)]
+    stk = [(0,0,0)]
+
+    if grid[0][0] == 1 or grid[rows - 1][cols - 1] == 1 or len(grid) == 0:
+        return 0
+
+    target = (rows - 1, cols - 1)
+    grid[0][0] = 1
+    count = 0
+
+    while stk:
+        r,c, phase = stk.pop()
+
+        # processing logic here
+
+        if (r,c) == target:
+            count += 1
+            grid[r][c] = 0
+            continue
+
+        if phase == 0:
+            # we are visiting the node for the first time
+            stk.append((r,c,1))
+
+        if phase == 1:
+            # we are leaving the node after visiting all its neighbours
+            grid[r][c] = 0
+            continue
+
+        for x, y in directions:
+            nr, nc = r + x, c + y
+            if (0 <= nr < rows and 0 <= nc < cols and grid[nr][nc] == 0):
+                stk.append((nr,nc, 0))
+                grid[nr][nc] = 1
+    
+    return count
