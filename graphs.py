@@ -340,3 +340,6 @@ def unique_paths(grid):
                 grid[nr][nc] = 1
     
     return count
+
+def djikstra(graph):
+    
