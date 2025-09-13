@@ -35,3 +35,19 @@ print(chr)
 # .count() return snumber of non overlapping occurences of a substring useful for subsequences.
 
 print("banana".count("an"))
+
+
+# Prefix sum part:
+
+def prefix(arr):
+    n = len(arr)
+    pref = [0] * (n+1)
+
+    for i in range(1, n+1):
+        pref[i] = pref[i-1] + arr[i-1]
+
+    return pref
+
+print(prefix(B))
+
+# Sum between i,j indices is pref[j+1] - pref[i]
