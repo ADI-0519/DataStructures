@@ -14,6 +14,24 @@ def binary_search(arr,target):
         
     return -1
 
+
+# condition based
+
+def condition_binary_search(arr,target):
+    l,r = 0,len(arr)-1
+
+    while l < r:
+        mid = l + (r-l) // 2
+
+        if arr[mid] >= target:
+            r = mid
+
+        else:
+            l = mid + 1
+
+    return l
+
+
 def linear_search(arr,target):
     for i,element in enumerate(arr):
         if element == target:

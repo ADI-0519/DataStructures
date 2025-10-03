@@ -1,5 +1,5 @@
 # Graphs can be supplied using array of edges, an adjacecency matrix, a class or a dictionary
-
+import heapq
 n = 8
 A = [[0,1],[1,2],[0,3],[3,4],[3,6],[3,7],[4,2],[4,5],[5,2]]
 
@@ -341,5 +341,86 @@ def unique_paths(grid):
     
     return count
 
-def djikstra(graph):
+def topological_sort(edges):
+
+    # first find indegrees
+    top_sort = []
+    adj_list = defaultdict(list)
+    indegrees = [0] * n
+
+    q = deque()
+    for u,v in edges:
+        adj_list[u].append(v)
+        indegrees[v] += 1
+
+    for i,item in enumerate(indegrees):
+        if item == 0:
+            q.append(i)
+
+    while q:
+        # Deque first node from queue, add to top_sort and reduce its neighbours indegrees by one
+
+        node = q.popleft()
+        top_sort.append(node)
+        for nei in adj_list.get(node,[]):
+            indegrees[nei] -= 1
+
+            if indegrees[nei] <= 0:
+                q.append(nei)
+
+    return top_sort
+
+
+
+     
+
+
+
+def djikstra(edges, source_node):
+    # each edge contains u,v and a weight (positive only)
+    adj_list = defaultdict(list)
+    for u,v,weight in edges:
+        adj_list[u].append((v,weight))
+
+    min_times = {}
+    heap = [(0,source_node)] # stores (dist,node)
+
+    while heap:
+
+        dist,node = heapq.heappop(heap)
+
+        # Check for stale entries
+
+        if node in min_times: 
+            continue
+
     
+        for nei,weight in adj_list.get(node,[]):
+            if nei not in min_times:
+                heapq.heappush(heap, (dist+weight,nei))
+
+    print(min_times)
+
+
+def dijkstra_alt(edges, source_node):
+    adj_list = defaultdict(list)
+    for u,v,weight in edges:
+        adj_list[u].append((v,weight))
+
+    dist = {i: float("inf") for i in range(1,n+1)}
+    heap = [(0,source_node)] # stores (dist,node)
+
+    dist[source_node] = 0
+
+    while heap:
+        d, node = heapq.heappop(heap)
+
+        if d > dist[node]:
+            continue
+
+        for v,weight in adj_list.get(node,[]):
+            if d + weight < dist[v]:
+                dist[v] = d + weight
+                heapq.heappush(heap,(dist[v],v))
+
+    print(dist)

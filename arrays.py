@@ -6,6 +6,13 @@ A = ["mass","as","hero","superhero"]
 S =  "   fly me   to   the moon  "
 B = [1, 3, 4, 6, 1, 9, 10]
 c = "c"
+string = "hello"
+
+# for i in range(len(string)):
+#     if i == 1:
+#         string[i] = "b"
+
+# print(string)
 
 
 print(max(B), min(B))
@@ -51,3 +58,18 @@ def prefix(arr):
 print(prefix(B))
 
 # Sum between i,j indices is pref[j+1] - pref[i]
+
+def prefix_alt(arr):
+    n = len(arr)
+    pref = [0] * n
+    total = 0
+
+    for i in range(n):
+        total += arr[i]
+        pref[i] = total
+
+    return pref
+
+print(prefix_alt(B))
+
+# Sum between i,j inclusive: pref[j] - pref[i-1]

@@ -16,9 +16,7 @@ class DoublyNode:
 
     def __str__(self):
         return str(self.val)
-     
     
-
 class LinkedList:
     def __init__(self):
         # Head points to start of linked list
